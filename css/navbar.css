@@ -1,0 +1,98 @@
+/* ============================================
+   NAVBAR.CSS
+   ============================================ */
+
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--navbar-height);
+  background: var(--green-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+.nav-brand {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.nav-brand-main {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.nav-brand-sub {
+  color: rgba(255,255,255,0.55);
+  font-size: 10px;
+  font-family: var(--font-marathi);
+  margin-top: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2px;
+}
+.nav-link {
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s, color 0.15s;
+  min-height: 36px;
+}
+.nav-link:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.nav-link.active { background: rgba(255,255,255,0.22); color: #fff; }
+
+.nav-lang-btn {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 12px;
+  font-family: var(--font-marathi);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.25);
+  transition: background 0.15s;
+  min-height: 36px;
+}
+.nav-lang-btn:hover { background: rgba(255,255,255,0.25); }
+
+/* Hamburger — mobile only */
+.nav-hamburger {
+  display: none;
+  color: #fff;
+  font-size: 20px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+}
+
+/* Mobile nav drawer */
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  background: var(--green-dark);
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0; right: 0;
+  z-index: 999;
+  padding: 8px 16px 16px;
+  gap: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav .nav-link {
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .nav-links, .nav-lang-btn { display: none; }
+  .nav-hamburger { display: block; }
+}

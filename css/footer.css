@@ -1,0 +1,27 @@
+/* ============================================
+   FOOTER.CSS
+   ============================================ */
+
+.footer {
+  background: var(--green-dark);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.footer-brand {
+  color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-marathi);
+}
+.footer-note {
+  color: rgba(255,255,255,0.4);
+  font-size: 11px;
+}
+
+@media (max-width: 480px) {
+  .footer { flex-direction: column; text-align: center; }
+}

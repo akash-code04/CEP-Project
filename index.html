@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arogya Sahayak — PCMC Health Awareness</title>
+
+  <!-- Leaflet.js Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi&family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/hospitals.css" />
+  <link rel="stylesheet" href="css/schemes.css" />
+  <link rel="stylesheet" href="css/organ.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <span class="nav-brand-main">Arogya Sahayak</span>
+      <span class="nav-brand-sub" id="nav-sub">आरोग्य सहायक · PCMC</span>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link active" data-tab="home" id="nav-home">Home</button>
+      <button class="nav-link" data-tab="hospitals" id="nav-hospitals">Hospitals</button>
+      <button class="nav-link" data-tab="schemes" id="nav-schemes">Schemes</button>
+      <button class="nav-link" data-tab="organ" id="nav-organ">Organ Donation</button>
+    </div>
+    <button class="nav-lang-btn" id="lang-toggle">मराठी</button>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">&#9776;</button>
+  </nav>
+
+  <!-- MOBILE NAV DRAWER -->
+  <div class="mobile-nav" id="mobile-nav">
+    <button class="nav-link active" data-tab="home">Home</button>
+    <button class="nav-link" data-tab="hospitals">Hospitals</button>
+    <button class="nav-link" data-tab="schemes">Schemes</button>
+    <button class="nav-link" data-tab="organ">Organ Donation</button>
+  </div>
+
+  <!-- PAGES -->
+  <main>
+    <section id="page-home"   class="page active"></section>
+    <section id="page-hospitals" class="page"></section>
+    <section id="page-schemes"   class="page"></section>
+    <section id="page-organ"     class="page"></section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span class="footer-brand">Arogya Sahayak · आरोग्य सहायक</span>
+    <span class="footer-note" id="footer-note">Currently serving PCMC · Expanding soon</span>
+  </footer>
+
+  <!-- JS: Data first, then utilities, then pages, then boot -->
+  <script src="js/data/strings.js"></script>
+  <script src="js/data/schemes.js"></script>
+  <script src="js/lang.js"></script>
+  <script src="js/tabs.js"></script>
+  <script src="js/pages/home.js"></script>
+  <script src="js/pages/hospitals.js"></script>
+  <script src="js/pages/schemes.js"></script>
+  <script src="js/pages/organ.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

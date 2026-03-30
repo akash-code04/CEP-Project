@@ -1,0 +1,196 @@
+/* ============================================
+   HOSPITALS.CSS
+   ============================================ */
+
+.hospitals-layout {
+  display: flex;
+  height: calc(100vh - var(--navbar-height) - 52px);
+}
+
+/* Left panel */
+.hosp-panel {
+  width: 380px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.hosp-search-bar {
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  flex-shrink: 0;
+}
+.hosp-search-row {
+  display: flex;
+  gap: 8px;
+}
+.hosp-search-input {
+  flex: 1;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.hosp-search-input:focus { border-color: var(--green-main); }
+.hosp-search-input::placeholder { color: var(--text-muted); }
+
+.geo-btn {
+  background: var(--green-main);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 9px 14px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  min-height: 38px;
+  transition: background 0.15s;
+}
+.geo-btn:hover { background: var(--green-dark); }
+
+.hosp-count {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  padding-left: 2px;
+}
+
+.hosp-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hosp-list::-webkit-scrollbar { width: 4px; }
+.hosp-list::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+
+/* Hospital card */
+.hosp-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.hosp-card:hover { border-color: var(--green-border); box-shadow: var(--shadow-sm); }
+.hosp-card.selected {
+  border-color: var(--green-main);
+  border-width: 1.5px;
+  box-shadow: 0 0 0 3px rgba(15,110,86,0.08);
+}
+
+.hosp-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.hosp-card-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  flex: 1;
+}
+.hosp-type-badge {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.badge-major    { background: #E1F5EE; color: #085041; }
+.badge-general  { background: #f0efea; color: #444; }
+.badge-maternity{ background: var(--pink-light); color: var(--pink-dark); }
+.badge-opd      { background: var(--blue-light); color: var(--blue-dark); }
+
+.hosp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.hosp-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.hosp-distance {
+  font-size: 11px;
+  color: var(--green-mid);
+  font-weight: 500;
+}
+.hosp-gmaps {
+  display: inline-block;
+  font-size: 11px;
+  color: var(--green-main);
+  font-weight: 500;
+  margin-top: 4px;
+  transition: color 0.15s;
+}
+.hosp-gmaps:hover { color: var(--green-dark); }
+
+.hosp-emergency-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: var(--red-mid);
+  border-radius: 50%;
+  margin-right: 4px;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Map panel */
+.map-panel {
+  flex: 1;
+  position: relative;
+}
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom Leaflet marker */
+.custom-marker {
+  width: 28px; height: 28px;
+  background: var(--green-main);
+  border: 2px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: transform 0.15s;
+}
+.custom-marker.major {
+  background: var(--coral-mid);
+  width: 32px; height: 32px;
+}
+.custom-marker.maternity { background: #D4537E; }
+.custom-marker.opd { background: var(--blue-dark); }
+
+@media (max-width: 900px) {
+  .hospitals-layout { flex-direction: column; height: auto; }
+  .hosp-panel { width: 100%; height: 50vh; }
+  .map-panel { height: 50vh; }
+}
+@media (max-width: 600px) {
+  .hosp-panel { height: 55vh; }
+  .map-panel  { height: 45vh; }
+}

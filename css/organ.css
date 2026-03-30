@@ -1,0 +1,215 @@
+/* ============================================
+   ORGAN.CSS
+   ============================================ */
+
+.organ-page { background: var(--white); }
+
+/* Hero */
+.organ-hero {
+  background: var(--coral-light);
+  border-bottom: 1px solid #F5C4B3;
+  padding: 40px 24px;
+  text-align: center;
+}
+.organ-hero h2 {
+  font-size: 28px;
+  color: var(--coral-dark);
+  margin-bottom: 10px;
+}
+.organ-hero p {
+  font-size: 14px;
+  color: #993C1D;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Stats inline */
+.organ-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.organ-stat { text-align: center; }
+.organ-stat-num {
+  display: block;
+  font-size: 22px;
+  font-weight: 600;
+  font-family: var(--font-display);
+  color: var(--coral-mid);
+}
+.organ-stat-label {
+  font-size: 11px;
+  color: #993C1D;
+  margin-top: 2px;
+}
+
+/* Steps section */
+.steps-section {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 40px 24px 0;
+}
+.steps-section h3 {
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: var(--text-primary);
+}
+
+.step-list { display: flex; flex-direction: column; gap: 16px; }
+.step-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 18px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+.step-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--green-main);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-content h4 {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.step-content p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.step-link {
+  color: var(--green-main);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Pledge button */
+.pledge-section {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+.pledge-btn {
+  display: block;
+  width: 100%;
+  background: var(--coral-mid);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  transition: background 0.15s, transform 0.15s;
+  box-shadow: var(--shadow-sm);
+}
+.pledge-btn:hover { background: var(--coral-dark); transform: translateY(-1px); }
+
+/* Myths & Facts section */
+.myths-section {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+}
+.myths-section h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.myths-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.myths-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+/* Flip card */
+.flip-card {
+  height: 140px;
+  perspective: 700px;
+  cursor: pointer;
+}
+.flip-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+
+.flip-front, .flip-back {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-front {
+  background: var(--red-light);
+  border: 1px solid #F7C1C1;
+}
+.flip-back {
+  background: #EAF3DE;
+  border: 1px solid #C0DD97;
+  transform: rotateY(180deg);
+}
+
+.flip-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.flip-front .flip-label { color: #A32D2D; }
+.flip-back  .flip-label { color: #27500A; }
+
+.flip-text {
+  font-size: 13px;
+  line-height: 1.5;
+  flex: 1;
+}
+.flip-front .flip-text { color: var(--red-dark); }
+.flip-back  .flip-text { color: #27500A; }
+
+.flip-hint {
+  font-size: 10px;
+  margin-top: 6px;
+  opacity: 0.6;
+}
+.flip-front .flip-hint { color: var(--red-dark); }
+.flip-back  .flip-hint { color: #27500A; }
+
+/* Divider */
+.section-divider {
+  max-width: 680px;
+  margin: 0 auto;
+  height: 1px;
+  background: var(--border);
+}
+
+@media (max-width: 600px) {
+  .myths-grid { grid-template-columns: 1fr; }
+  .flip-card { height: auto; min-height: 120px; }
+  .flip-front, .flip-back { position: relative; }
+  .flip-inner { transition: none; }
+}

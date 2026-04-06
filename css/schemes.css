@@ -10,7 +10,7 @@
 
 /* ---- Left panel: filter bar + scheme list ---- */
 .schemes-panel {
-  width: 420px;
+  width: 500px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -153,8 +153,8 @@
 
 /* Scheme detail content */
 .scheme-detail {
-  padding: 28px 32px 48px;
-  max-width: 720px;
+  padding: 28px 36px 48px;
+  max-width: 100%;
 }
 
 .scheme-detail-hero {
@@ -192,10 +192,11 @@
   border: 1px solid var(--border);
   border-left: 3px solid var(--green-main);
   border-radius: var(--radius-md);
-  padding: 16px 18px;
+  padding: 18px 20px;
   margin-bottom: 24px;
-  font-size: 14px;
-  color: var(--text-secondary);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
   line-height: 1.7;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -332,4 +333,48 @@
   .schemes-panel { width: 100%; height: auto; max-height: 50vh; }
   .schemes-detail-panel { min-height: 60vh; }
   .scheme-detail { padding: 20px 16px 40px; }
+}
+
+/* Bigger text throughout detail panel */
+.scheme-eligibility-list li {
+  font-size: 15px;
+  line-height: 1.6;
+}
+.scheme-docs-list { display: none; } /* replaced by grid widget below */
+.scheme-step-text strong { font-size: 15px; }
+.scheme-step-text span   { font-size: 14px; }
+.scheme-section-title    { font-size: 12px; }
+
+/* Documents grid — 2 column widget */
+.scheme-docs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.scheme-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+}
+.scheme-doc-icon {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: var(--blue-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.scheme-doc-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .scheme-docs-grid { grid-template-columns: 1fr; }
 }

@@ -118,9 +118,6 @@ function buildSchemeDetail(s) {
   const eligibilityItems = s.eligibility
     .map(e => `<li>${e}</li>`).join('');
 
-  const documentItems = s.documents
-    .map(d => `<li>${d}</li>`).join('');
-
   const stepsHtml = s.applySteps
     .map((step, i) => `
       <div class="scheme-step">
@@ -159,7 +156,14 @@ function buildSchemeDetail(s) {
       <!-- Documents -->
       <div class="scheme-section">
         <div class="scheme-section-title">Documents needed</div>
-        <ul class="scheme-docs-list">${documentItems}</ul>
+        <div class="scheme-docs-grid">
+          ${s.documents.map(d => `
+            <div class="scheme-doc-item">
+              <div class="scheme-doc-icon">📄</div>
+              <span class="scheme-doc-label">${d}</span>
+            </div>
+          `).join('')}
+        </div>
       </div>
 
       <!-- How to apply steps -->

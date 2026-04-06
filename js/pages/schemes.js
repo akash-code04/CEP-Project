@@ -2,93 +2,183 @@
    js/pages/schemes.js
    ============================================ */
 
-let activeFilter = 'all';
+let activeSchemeFilter = 'all';
+let selectedSchemeId   = null;
 
 function renderSchemes() {
   const container = document.getElementById('page-schemes');
   container.innerHTML = `
-    <div class="schemes-page">
-      <div class="schemes-header">
-        <h2>Government Health Schemes</h2>
-        <p>Find schemes you or your family may be eligible for — all free, all verified.</p>
+    <div class="schemes-layout">
+
+      <!-- LEFT: filter + list -->
+      <div class="schemes-panel">
+        <div class="schemes-filter-bar">
+          <div class="schemes-filter-bar-title">Filter by category</div>
+          <div class="filter-row" id="scheme-filter-row">
+            <button class="filter-pill active" data-filter="all">All</button>
+            <button class="filter-pill" data-filter="maternity">Maternity</button>
+            <button class="filter-pill" data-filter="bpl">BPL families</button>
+            <button class="filter-pill" data-filter="children">Children</button>
+          </div>
+          <div class="schemes-count" id="schemes-count"></div>
+        </div>
+        <div class="schemes-list" id="schemes-list"></div>
       </div>
-      <div class="filter-row" id="filter-row">
-        <button class="filter-pill active" data-filter="all">All schemes</button>
-        <button class="filter-pill" data-filter="maternity">Maternity</button>
-        <button class="filter-pill" data-filter="bpl">BPL families</button>
-        <button class="filter-pill" data-filter="children">Children</button>
-        <button class="filter-pill" data-filter="all">All citizens</button>
+
+      <!-- RIGHT: detail view -->
+      <div class="schemes-detail-panel" id="schemes-detail-panel">
+        <div class="scheme-empty-state" id="scheme-empty-state">
+          <div class="scheme-empty-icon">📋</div>
+          <p>Select a scheme from the list to see full details, eligibility, and how to apply.</p>
+        </div>
       </div>
-      <div class="schemes-grid" id="schemes-grid"></div>
+
     </div>
   `;
 
-  renderSchemeCards('all');
+  renderSchemeList('all');
 
-  // Filter pill clicks
-  document.getElementById('filter-row').addEventListener('click', e => {
+  // Filter pills
+  document.getElementById('scheme-filter-row').addEventListener('click', e => {
     const pill = e.target.closest('.filter-pill');
     if (!pill) return;
-    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('#scheme-filter-row .filter-pill')
+      .forEach(p => p.classList.remove('active'));
     pill.classList.add('active');
-    activeFilter = pill.dataset.filter;
-    renderSchemeCards(activeFilter);
+    activeSchemeFilter = pill.dataset.filter;
+    selectedSchemeId = null;
+    renderSchemeList(activeSchemeFilter);
+    showEmptyState();
   });
 }
 
-function renderSchemeCards(filter) {
-  const grid = document.getElementById('schemes-grid');
+/* ---- Render left panel list ---- */
+function renderSchemeList(filter) {
+  const list = document.getElementById('schemes-list');
   const filtered = filter === 'all'
     ? SCHEMES
     : SCHEMES.filter(s => s.filterKey === filter);
 
-  grid.innerHTML = '';
+  list.innerHTML = '';
   filtered.forEach((s, i) => {
-    const card = createSchemeCard(s, i);
-    grid.appendChild(card);
+    const item = document.createElement('div');
+    item.className = 'scheme-list-item fade-up';
+    item.dataset.id = s.id;
+    item.style.animationDelay = (i * 0.04) + 's';
+    if (s.id === selectedSchemeId) item.classList.add('selected');
+
+    item.innerHTML = `
+      <div class="scheme-list-icon" style="background:${s.iconBg}">${s.icon}</div>
+      <div class="scheme-list-info">
+        <div class="scheme-list-name">${s.name}</div>
+        <span class="scheme-list-badge ${s.categoryClass}">${s.category}</span>
+      </div>
+    `;
+
+    item.addEventListener('click', () => selectScheme(s.id));
+    list.appendChild(item);
   });
+
+  // Update count
+  const countEl = document.getElementById('schemes-count');
+  if (countEl) countEl.textContent = `${filtered.length} scheme${filtered.length !== 1 ? 's' : ''}`;
 }
 
-function createSchemeCard(s, delay) {
-  const div = document.createElement('div');
-  div.className = 'scheme-card fade-up';
-  div.dataset.id = s.id;
-  div.style.animationDelay = (delay * 0.08) + 's';
+/* ---- Select a scheme and show detail ---- */
+function selectScheme(id) {
+  selectedSchemeId = id;
 
-  const eligibilityItems = s.eligibility.map(e => `<li>${e}</li>`).join('');
-  const documentItems = s.documents.map(d => `<li>${d}</li>`).join('');
-
-  div.innerHTML = `
-    <div class="scheme-card-top">
-      <div class="scheme-card-header">
-        <div class="scheme-icon" style="background:${s.iconBg}">${s.icon}</div>
-        <span class="scheme-card-title">${s.name}</span>
-      </div>
-      <span class="scheme-category-badge ${s.categoryClass}">${s.category}</span>
-      <p class="scheme-desc">${s.description}</p>
-      <div class="scheme-expand-btn">
-        Eligibility &amp; apply
-        <span class="scheme-expand-arrow">›</span>
-      </div>
-    </div>
-    <div class="scheme-card-body">
-      <div class="scheme-detail-section">
-        <h4>Who can apply</h4>
-        <ul>${eligibilityItems}</ul>
-      </div>
-      <div class="scheme-detail-section">
-        <h4>Documents needed</h4>
-        <ul>${documentItems}</ul>
-      </div>
-      <a class="scheme-apply-link" href="${s.applyUrl}" target="_blank" rel="noopener">
-        ${s.applyLabel} →
-      </a>
-    </div>
-  `;
-
-  div.querySelector('.scheme-card-top').addEventListener('click', () => {
-    div.classList.toggle('open');
+  // Highlight selected item in list
+  document.querySelectorAll('.scheme-list-item').forEach(el => {
+    el.classList.toggle('selected', el.dataset.id === id);
   });
 
-  return div;
+  const scheme = SCHEMES.find(s => s.id === id);
+  if (!scheme) return;
+
+  const panel = document.getElementById('schemes-detail-panel');
+  panel.innerHTML = buildSchemeDetail(scheme);
+
+  // Scroll detail panel to top
+  panel.scrollTop = 0;
+}
+
+function showEmptyState() {
+  const panel = document.getElementById('schemes-detail-panel');
+  panel.innerHTML = `
+    <div class="scheme-empty-state">
+      <div class="scheme-empty-icon">📋</div>
+      <p>Select a scheme from the list to see full details, eligibility, and how to apply.</p>
+    </div>
+  `;
+}
+
+/* ---- Build the full detail view ---- */
+function buildSchemeDetail(s) {
+  const eligibilityItems = s.eligibility
+    .map(e => `<li>${e}</li>`).join('');
+
+  const documentItems = s.documents
+    .map(d => `<li>${d}</li>`).join('');
+
+  const stepsHtml = s.applySteps
+    .map((step, i) => `
+      <div class="scheme-step">
+        <div class="scheme-step-num">${i + 1}</div>
+        <div class="scheme-step-text">
+          <strong>${step.title}</strong>
+          <span>${step.desc}</span>
+        </div>
+      </div>
+    `).join('');
+
+  return `
+    <div class="scheme-detail">
+
+      <!-- Header -->
+      <div class="scheme-detail-hero">
+        <div class="scheme-detail-icon" style="background:${s.iconBg}">${s.icon}</div>
+        <div class="scheme-detail-hero-text">
+          <h2>${s.name}</h2>
+          <div class="scheme-detail-badges">
+            <span class="scheme-detail-badge ${s.categoryClass}">${s.category}</span>
+            ${s.benefit ? `<span class="scheme-detail-badge tag-green">${s.benefit}</span>` : ''}
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="scheme-summary-box">${s.description}</div>
+
+      <!-- Eligibility -->
+      <div class="scheme-section">
+        <div class="scheme-section-title">Who can apply</div>
+        <ul class="scheme-eligibility-list">${eligibilityItems}</ul>
+      </div>
+
+      <!-- Documents -->
+      <div class="scheme-section">
+        <div class="scheme-section-title">Documents needed</div>
+        <ul class="scheme-docs-list">${documentItems}</ul>
+      </div>
+
+      <!-- How to apply steps -->
+      <div class="scheme-section">
+        <div class="scheme-section-title">How to apply — step by step</div>
+        <div class="scheme-steps">${stepsHtml}</div>
+      </div>
+
+      <!-- Apply CTA -->
+      <div class="scheme-section">
+        <div class="scheme-section-title">Apply now</div>
+        <div class="scheme-apply-cta">
+          <a class="scheme-apply-btn" href="${s.applyUrl}" target="_blank" rel="noopener">
+            ${s.applyLabel} →
+          </a>
+          ${s.helpline ? `<div class="scheme-helpline">Helpline<br><strong>${s.helpline}</strong></div>` : ''}
+        </div>
+      </div>
+
+    </div>
+  `;
 }

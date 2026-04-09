@@ -58,17 +58,6 @@
   color: var(--text-primary);
 }
 
-/* .step-list { display: flex; flex-direction: column; gap: 16px; }
-.step-item {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  padding: 18px;
-  background: var(--surface);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-} */
-
 .steps-visual-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -138,17 +127,6 @@
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-.step-content h4 {
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-.step-content p {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-}
 .step-link {
   color: var(--green-main);
   font-weight: 500;
@@ -201,14 +179,16 @@
 
 /* Flip card */
 .flip-card {
-  height: 140px;
-  perspective: 700px;
+  height: 170px;
+  perspective: 1000px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 .flip-inner {
   position: relative;
-  width: 100%; height: 100%;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  height: 100%;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
 }
 .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
@@ -245,7 +225,7 @@
 
 .flip-text {
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.6;
   flex: 1;
 }
 .flip-front .flip-text { color: var(--red-dark); }
@@ -253,34 +233,70 @@
 
 .flip-hint {
   font-size: 10px;
-  margin-top: 6px;
-  opacity: 0.6;
+  margin-top: 8px;
+  opacity: 0.7;
 }
 .flip-front .flip-hint { color: var(--red-dark); }
 .flip-back  .flip-hint { color: #27500A; }
 
-/* Divider */
-.section-divider {
-  max-width: 680px;
-  margin: 0 auto;
-  height: 1px;
-  background: var(--border);
+/* MOBILE */
+@media (max-width: 900px) {
+  .steps-section {
+    padding: 28px 14px 0;
+  }
+
+  .steps-visual-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .pledge-section {
+    padding: 22px 14px;
+  }
+
+  .pledge-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .myths-section {
+    padding: 0 14px 32px;
+  }
+
+  .myths-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .flip-card {
+    height: 180px;
+  }
+
+  .flip-front,
+  .flip-back {
+    padding: 18px 16px;
+  }
 }
 
 @media (max-width: 600px) {
-  .myths-grid { grid-template-columns: 1fr; }
-  .flip-card { height: auto; min-height: 120px; }
-  .flip-front, .flip-back { position: relative; }
-  .flip-inner { transition: none; }
-  .steps-visual-grid {
-    grid-template-columns: 1fr;
+  .organ-hero {
+    padding: 32px 16px;
   }
 
-  .step-image-placeholder {
-    height: 160px;
+  .organ-hero h2 {
+    font-size: 24px;
   }
 
-  .myths-grid { 
-    grid-template-columns: 1fr; 
+  .organ-stats {
+    gap: 18px;
+  }
+
+  .steps-section h3,
+  .myths-section h3 {
+    font-size: 18px;
+  }
+
+  .flip-card {
+    height: 190px;
   }
 }

@@ -99,8 +99,9 @@
 }
 
 .section-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 18px;
+  font-weight: 400;
   color: #fff;
   margin-bottom: 14px;
   text-align: center;

@@ -5,12 +5,16 @@
 let activeSchemeFilter = 'all';
 let selectedSchemeId   = null;
 
+function isMobileSchemeView() {
+  return window.innerWidth <= 860;
+}
+
 function renderSchemes() {
   const container = document.getElementById('page-schemes');
   container.innerHTML = `
     <div class="schemes-layout">
 
-      <!-- LEFT: filter + list -->
+      <!-- LEFT: filter + list / dropdown -->
       <div class="schemes-panel">
         <div class="schemes-filter-bar">
           <div class="schemes-filter-bar-title">Filter by category</div>
@@ -22,42 +26,81 @@ function renderSchemes() {
           </div>
           <div class="schemes-count" id="schemes-count"></div>
         </div>
+
+        <!-- Desktop list -->
         <div class="schemes-list" id="schemes-list"></div>
+
+        <!-- Mobile dropdown -->
+        <div class="schemes-mobile-selector hidden" id="schemes-mobile-selector"></div>
       </div>
 
-      <!-- RIGHT: detail view -->
+      <!-- RIGHT / BELOW: detail view -->
       <div class="schemes-detail-panel" id="schemes-detail-panel">
         <div class="scheme-empty-state" id="scheme-empty-state">
           <div class="scheme-empty-icon">📋</div>
-          <p>Select a scheme from the list to see full details, eligibility, and how to apply.</p>
+          <p>Please select a scheme</p>
         </div>
       </div>
 
     </div>
   `;
 
-  renderSchemeList('all');
+  renderSchemeList(activeSchemeFilter);
 
   // Filter pills
   document.getElementById('scheme-filter-row').addEventListener('click', e => {
     const pill = e.target.closest('.filter-pill');
     if (!pill) return;
+
     document.querySelectorAll('#scheme-filter-row .filter-pill')
       .forEach(p => p.classList.remove('active'));
+
     pill.classList.add('active');
     activeSchemeFilter = pill.dataset.filter;
     selectedSchemeId = null;
+
     renderSchemeList(activeSchemeFilter);
     showEmptyState();
   });
+
+  // Re-render correctly if screen size changes
+  window.addEventListener('resize', handleSchemesResize);
 }
 
-/* ---- Render left panel list ---- */
+/* ---- Resize handling ---- */
+function handleSchemesResize() {
+  renderSchemeList(activeSchemeFilter);
+}
+
+/* ---- Render left panel list OR mobile dropdown ---- */
 function renderSchemeList(filter) {
   const list = document.getElementById('schemes-list');
+  const mobileSelector = document.getElementById('schemes-mobile-selector');
+
   const filtered = filter === 'all'
     ? SCHEMES
     : SCHEMES.filter(s => s.filterKey === filter);
+
+  // Update count
+  const countEl = document.getElementById('schemes-count');
+  if (countEl) countEl.textContent = `${filtered.length} scheme${filtered.length !== 1 ? 's' : ''}`;
+
+  // MOBILE = dropdown only
+  if (isMobileSchemeView()) {
+    if (list) list.innerHTML = '';
+    if (list) list.classList.add('hidden');
+
+    renderMobileDropdown(filtered);
+    if (mobileSelector) mobileSelector.classList.remove('hidden');
+    return;
+  }
+
+  // DESKTOP = original cards
+  if (mobileSelector) {
+    mobileSelector.innerHTML = '';
+    mobileSelector.classList.add('hidden');
+  }
+  if (list) list.classList.remove('hidden');
 
   list.innerHTML = '';
   filtered.forEach((s, i) => {
@@ -78,17 +121,49 @@ function renderSchemeList(filter) {
     item.addEventListener('click', () => selectScheme(s.id));
     list.appendChild(item);
   });
+}
 
-  // Update count
-  const countEl = document.getElementById('schemes-count');
-  if (countEl) countEl.textContent = `${filtered.length} scheme${filtered.length !== 1 ? 's' : ''}`;
+/* ---- Mobile dropdown renderer ---- */
+function renderMobileDropdown(filtered) {
+  const mobileSelector = document.getElementById('schemes-mobile-selector');
+  if (!mobileSelector) return;
+
+  mobileSelector.innerHTML = `
+    <div class="mobile-scheme-selector-wrap">
+      <label class="mobile-scheme-label" for="mobile-scheme-select">
+        Please select a scheme
+      </label>
+
+      <select id="mobile-scheme-select" class="mobile-scheme-select">
+        <option value="">Please select a scheme</option>
+        ${filtered.map(s => `
+          <option value="${s.id}" ${s.id === selectedSchemeId ? 'selected' : ''}>
+            ${s.name}
+          </option>
+        `).join('')}
+      </select>
+    </div>
+  `;
+
+  const select = document.getElementById('mobile-scheme-select');
+  if (!select) return;
+
+  select.addEventListener('change', (e) => {
+    const id = e.target.value;
+    if (!id) {
+      selectedSchemeId = null;
+      showEmptyState();
+      return;
+    }
+    selectScheme(id);
+  });
 }
 
 /* ---- Select a scheme and show detail ---- */
 function selectScheme(id) {
   selectedSchemeId = id;
 
-  // Highlight selected item in list
+  // Highlight selected item in desktop list
   document.querySelectorAll('.scheme-list-item').forEach(el => {
     el.classList.toggle('selected', el.dataset.id === id);
   });
@@ -99,16 +174,21 @@ function selectScheme(id) {
   const panel = document.getElementById('schemes-detail-panel');
   panel.innerHTML = buildSchemeDetail(scheme);
 
+  // Sync mobile dropdown selection if needed
+  const mobileSelect = document.getElementById('mobile-scheme-select');
+  if (mobileSelect) mobileSelect.value = id;
+
   // Scroll detail panel to top
   panel.scrollTop = 0;
 }
 
+/* ---- Empty state ---- */
 function showEmptyState() {
   const panel = document.getElementById('schemes-detail-panel');
   panel.innerHTML = `
     <div class="scheme-empty-state">
       <div class="scheme-empty-icon">📋</div>
-      <p>Select a scheme from the list to see full details, eligibility, and how to apply.</p>
+      <p>Please select a scheme</p>
     </div>
   `;
 }

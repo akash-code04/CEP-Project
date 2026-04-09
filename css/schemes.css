@@ -120,6 +120,40 @@
   border-radius: 10px;
 }
 
+/* ---- Mobile selector ---- */
+.schemes-mobile-selector {
+  display: none;
+  padding: 12px;
+}
+
+.mobile-scheme-selector-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-scheme-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.mobile-scheme-select {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: var(--white);
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+}
+
+.mobile-scheme-select:focus {
+  border-color: var(--green-main);
+}
+
 /* ---- Right panel: scheme detail ---- */
 .schemes-detail-panel {
   flex: 1;
@@ -228,11 +262,11 @@
   gap: 8px;
 }
 .scheme-eligibility-list li {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--text-secondary);
   padding-left: 20px;
   position: relative;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 .scheme-eligibility-list li::before {
   content: '✓';
@@ -241,28 +275,6 @@
   color: var(--green-mid);
   font-weight: 700;
   font-size: 12px;
-}
-
-/* Documents list */
-.scheme-docs-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.scheme-docs-list li {
-  font-size: 13px;
-  color: var(--text-secondary);
-  padding-left: 20px;
-  position: relative;
-  line-height: 1.5;
-}
-.scheme-docs-list li::before {
-  content: '📄';
-  position: absolute;
-  left: 0;
-  font-size: 11px;
-  top: 1px;
 }
 
 /* Step-by-step apply guide */
@@ -290,13 +302,13 @@
 .scheme-step-text { flex: 1; }
 .scheme-step-text strong {
   display: block;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 2px;
 }
 .scheme-step-text span {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-secondary);
   line-height: 1.5;
 }
@@ -327,25 +339,8 @@
   line-height: 1.5;
 }
 
-/* Mobile responsive */
-@media (max-width: 860px) {
-  .schemes-layout { flex-direction: column; height: auto; }
-  .schemes-panel { width: 100%; height: auto; max-height: 50vh; }
-  .schemes-detail-panel { min-height: 60vh; }
-  .scheme-detail { padding: 20px 16px 40px; }
-}
-
-/* Bigger text throughout detail panel */
-.scheme-eligibility-list li {
-  font-size: 15px;
-  line-height: 1.6;
-}
-.scheme-docs-list { display: none; } /* replaced by grid widget below */
-.scheme-step-text strong { font-size: 15px; }
-.scheme-step-text span   { font-size: 14px; }
-.scheme-section-title    { font-size: 12px; }
-
-/* Documents grid — 2 column widget */
+/* Documents grid */
+.scheme-docs-list { display: none; }
 .scheme-docs-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -375,6 +370,114 @@
   line-height: 1.4;
 }
 
+/* Utility */
+.hidden {
+  display: none !important;
+}
+
+/* ---------------- MOBILE ONLY ---------------- */
+@media (max-width: 860px) {
+  .schemes-layout {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - var(--navbar-height) - 52px);
+  }
+
+  .schemes-panel {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    overflow: visible;
+  }
+
+  /* Keep filter bar on top */
+  .schemes-filter-bar {
+    padding: 12px;
+  }
+
+  /* Hide desktop card grid on mobile */
+  .schemes-list {
+    display: none !important;
+  }
+
+  /* Show mobile dropdown */
+  .schemes-mobile-selector {
+    display: block;
+  }
+
+  /* Detail comes below dropdown */
+  .schemes-detail-panel {
+    min-height: auto;
+    overflow: visible;
+    background: var(--surface);
+  }
+
+  .scheme-detail {
+    padding: 18px 14px 32px;
+  }
+
+  .scheme-detail-hero {
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+  }
+
+  .scheme-detail-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 22px;
+  }
+
+  .scheme-detail-hero-text h2 {
+    font-size: 18px;
+  }
+
+  .scheme-summary-box {
+    font-size: 14px;
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+
+  .scheme-section {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .scheme-apply-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .scheme-apply-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .scheme-empty-state {
+    min-height: 220px;
+    height: auto;
+    padding: 28px 20px;
+  }
+}
+
 @media (max-width: 600px) {
-  .scheme-docs-grid { grid-template-columns: 1fr; }
+  .scheme-docs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-row {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 2px;
+  }
+
+  .filter-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-pill {
+    flex: 0 0 auto;
+  }
 }

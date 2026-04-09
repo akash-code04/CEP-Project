@@ -59,33 +59,55 @@ function renderOrgan() {
         <h3>How to register as an organ donor</h3>
         <div class="step-list">
           <div class="step-item fade-up" style="animation-delay:0.05s">
-            <div class="step-num">1</div>
-            <div class="step-content">
-              <h4>Visit NOTTO online</h4>
-              <p>Go to <a class="step-link" href="https://notto.abdm.gov.in" target="_blank" rel="noopener">notto.abdm.gov.in</a> — the National Organ &amp; Tissue Transplant Organisation portal.</p>
-            </div>
-          </div>
-          <div class="step-item fade-up" style="animation-delay:0.10s">
-            <div class="step-num">2</div>
-            <div class="step-content">
-              <h4>Fill the pledge form</h4>
-              <p>Enter your name, date of birth, Aadhaar number, and select which organs you wish to donate. Takes under 5 minutes.</p>
-            </div>
-          </div>
-          <div class="step-item fade-up" style="animation-delay:0.15s">
-            <div class="step-num">3</div>
-            <div class="step-content">
-              <h4>Inform your family</h4>
-              <p>Family consent is legally required in India. Tell 2–3 close relatives about your decision so they can support it when the time comes.</p>
-            </div>
-          </div>
-          <div class="step-item fade-up" style="animation-delay:0.20s">
-            <div class="step-num">4</div>
-            <div class="step-content">
-              <h4>Download your donor card</h4>
-              <p>Save a digital copy on your phone and carry the physical card. Share it with your next of kin.</p>
-            </div>
-          </div>
+            <div class="steps-visual-grid">
+  <div class="step-visual-card fade-up" style="animation-delay:0.05s">
+    <div class="step-visual-top">
+      <div class="step-num">1</div>
+      <span class="step-badge">Open website</span>
+    </div>
+    <div class="step-image-placeholder">Screenshot 1</div>
+    <div class="step-content">
+      <h4>Visit NOTTO online</h4>
+      <p>Go to <a class="step-link" href="https://notto.abdm.gov.in" target="_blank" rel="noopener">notto.abdm.gov.in</a> — the official organ donation portal.</p>
+    </div>
+  </div>
+
+  <div class="step-visual-card fade-up" style="animation-delay:0.10s">
+    <div class="step-visual-top">
+      <div class="step-num">2</div>
+      <span class="step-badge">Fill details</span>
+    </div>
+    <div class="step-image-placeholder">Screenshot 2</div>
+    <div class="step-content">
+      <h4>Fill the pledge form</h4>
+      <p>Enter your basic details and choose the organs/tissues you wish to donate.</p>
+    </div>
+  </div>
+
+  <div class="step-visual-card fade-up" style="animation-delay:0.15s">
+    <div class="step-visual-top">
+      <div class="step-num">3</div>
+      <span class="step-badge">Tell family</span>
+    </div>
+    <div class="step-image-placeholder">Screenshot 3</div>
+    <div class="step-content">
+      <h4>Inform your family</h4>
+      <p>Family consent matters in India, so make sure your close relatives know your decision.</p>
+    </div>
+  </div>
+
+  <div class="step-visual-card fade-up" style="animation-delay:0.20s">
+    <div class="step-visual-top">
+      <div class="step-num">4</div>
+      <span class="step-badge">Save donor card</span>
+    </div>
+    <div class="step-image-placeholder">Screenshot 4</div>
+    <div class="step-content">
+      <h4>Download your donor card</h4>
+      <p>Save the donor card on your phone and keep a copy for future reference.</p>
+    </div>
+  </div>
+</div>
         </div>
       </div>
 

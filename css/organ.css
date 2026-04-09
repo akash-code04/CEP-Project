@@ -48,7 +48,7 @@
 
 /* Steps section */
 .steps-section {
-  max-width: 680px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 40px 24px 0;
 }
@@ -58,7 +58,7 @@
   color: var(--text-primary);
 }
 
-.step-list { display: flex; flex-direction: column; gap: 16px; }
+/* .step-list { display: flex; flex-direction: column; gap: 16px; }
 .step-item {
   display: flex;
   gap: 16px;
@@ -67,7 +67,67 @@
   background: var(--surface);
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
+} */
+
+.steps-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 20px;
 }
+
+.step-visual-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.step-visual-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.step-badge {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green-main);
+  background: var(--green-light);
+  border: 1px solid var(--green-border);
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+.step-image-placeholder {
+  width: 100%;
+  height: 180px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #F2F5F7, #E8EEF2);
+  border: 1px dashed #C7D2DA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7B8A97;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.step-content h4 {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.step-content p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
 .step-num {
   width: 32px; height: 32px;
   border-radius: 50%;
@@ -119,7 +179,7 @@
 
 /* Myths & Facts section */
 .myths-section {
-  max-width: 760px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 24px 48px;
 }
@@ -212,4 +272,15 @@
   .flip-card { height: auto; min-height: 120px; }
   .flip-front, .flip-back { position: relative; }
   .flip-inner { transition: none; }
+  .steps-visual-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .step-image-placeholder {
+    height: 160px;
+  }
+
+  .myths-grid { 
+    grid-template-columns: 1fr; 
+  }
 }

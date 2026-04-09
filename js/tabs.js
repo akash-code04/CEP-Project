@@ -51,8 +51,10 @@ function initTabs() {
   }
 
   // CTA buttons on home page navigate to tabs
-  document.addEventListener('click', e => {
-    const btn = e.target.closest('[data-goto]');
-    if (btn) showTab(btn.dataset.goto);
+  document.querySelectorAll('[data-tab-target]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.getAttribute('data-tab-target');
+    if (tab) showTab(tab);
   });
+});
 }
